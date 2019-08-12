@@ -39,6 +39,7 @@ export default {
 .menu{
 display: flex;
 flex-direction: column;
+
 justify-content: space-between;
 width: 15%;
 height: 100%;
