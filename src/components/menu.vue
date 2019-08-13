@@ -6,7 +6,9 @@
       </div>
     </div>
     <div class="menu__main">
-      <router-link to="/">Home</router-link>
+      <router-link to="/">
+        <div> HOME </div>
+      </router-link>
       <router-link to="/about">About</router-link>
       <router-link to="/heroes">Heróis</router-link>
       <router-link to="/superpower">Super Poderes</router-link>
