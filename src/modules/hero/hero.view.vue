@@ -18,10 +18,11 @@
               v-for="(col, index) in colunas"
               :key="index"
             ) {{ hero[col] }}
-    div.div_botao
-      button(type='button' @click="showModal").botao  Cadastrar Herói
-      modal(v-show="isModalVisible" @close="closeModal")
-      button(type='button').botao Deletar Herói
+    div.botao__main
+      div.div__botao
+        button(type='button' @click="showModal").botao__novo  Cadastrar Herói
+        modal(v-show="isModalVisible" @close="closeModal")
+        button(type='button').botao__delete Deletar Herói
 </template>
 
 
@@ -79,7 +80,7 @@ export default {
   display: flex
   flex-direction: column
   align-content: center
-  justify-content: space-between
+  justify-content: space-around
   width: 70%
   padding-left: 40px
 
@@ -106,13 +107,20 @@ thead, th
   height: 50px
   background-color: #FF0000
   color: white
-  
-.div_botao
+
+div.botao__main
+  display: flex  
+  justify-content: space-around
+  height: 150px
+
+.div__botao
   display: flex
   padding-botton: 30px
+  height: 60px
+  width: 100%
   justify-content: space-between
   
-.botao
+.botao__novo, .botao__delete
   background-color: #FF0000
   border: none
   color: white
@@ -123,7 +131,12 @@ thead, th
   font-size: 16px
   font-weight: bold
 
-.botao:active 
+.botao__novo:active 
+  background-color: #FF7F50
+  box-shadow: 0 5px #666
+  transform: translateY(4px)
+
+.botao__delete:active 
   background-color: #FF7F50
   box-shadow: 0 5px #666
   transform: translateY(4px)

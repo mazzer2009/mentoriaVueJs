@@ -70,15 +70,10 @@
 
         <footer class="modal-footer">
           <slot name="footer">
-            I'm the default footer!
 
-            <button
-              type="button"
-              class="btn-green"
-              @click="close"
-              aria-label="Close modal"
+            <button type="button" class="btn" @click="close" aria-label="Close modal"
             >
-              Close me!
+              Fechar
             </button>
           </slot>
         </footer>
