@@ -2,10 +2,9 @@
   export default {
     name: 'modal',
     data: {
-        heroname: null,
-        name: null,
-        erros: []
-
+      heroname: null,
+      name: null,
+      erros: []
     },
     methods: {
       close() {
@@ -26,6 +25,7 @@
     },
   };
 </script>
+
 <template>
   <transition name="modal-fade">
     <div class="modal-backdrop">
@@ -40,16 +40,16 @@
             <button type="button" class="btn-close" @click="close" aria-label="Close modal" >
               X
             </button>
-          </slot>  
+          </slot>
         </header>
-        
+
         <section class="modal-body" id="modalDescription" >
           <slot name="body">
             <form @submit="checarFormulario" method="post" class="formulario">
                 <p v-if="(1==2)">
                     <b>Para continuar, corrija os seguintes erros:</b>
                         <ul>
-                            <li v-for="(erro, index ) in erros" :key="index"> {{ erro }}</li> 
+                            <li v-for="(erro, index ) in erros" :key="index"> {{ erro }}</li>
                         </ul>
                 </p>
 
@@ -84,7 +84,7 @@
 
 <style lang="sass">
 
-  .modal-backdrop 
+  .modal-backdrop
     position: fixed
     top: 0
     bottom: 0
@@ -95,7 +95,7 @@
     justify-content: center
     align-items: center
 
-  .modal 
+  .modal
     background: #FFFFFF
     box-shadow: 2px 2px 20px 1px
     overflow-x: auto
@@ -105,29 +105,29 @@
     height: 450px
 
   .modal-header,
-  .modal-footer 
+  .modal-footer
     padding: 15px
     display: flex
-  
 
-  .modal-header 
+
+  .modal-header
     border-bottom: 1px solid #eeeeee
     color: white
     background-color: #FF0000
     justify-content: space-between
 
-  .modal-footer 
+  .modal-footer
     border-top: 1px solid #eeeeee
     justify-content: flex-end
     background-color: #FF0000
 
-  .modal-body 
+  .modal-body
     position: relative
     padding: 20px 10px
     height: 100%
     widows: 100%
-  
-  .btn-close 
+
+  .btn-close
     border: none
     font-size: 20px
     padding: 20px
@@ -136,14 +136,14 @@
     color: #4AAE9B
     background: transparent
 
-  .btn-green 
+  .btn-green
     color: white
     background: #4AAE9B
     border: 1px solid #4AAE9B
     border-radius: 2px
-  
 
-  .formulario 
+
+  .formulario
       display: flex
       justify-content: space-around
 </style>

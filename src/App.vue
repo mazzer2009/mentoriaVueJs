@@ -1,36 +1,38 @@
 <template>
   <div id="app">
-    <Menu></Menu>
-    <router-view />
+    <app-menu/>
+    <div class="content">
+      <router-view/>
+    </div>
   </div>
 </template>
 
 
 <script>
 // @ is an alias to /src
-import menu from '@/components/menu.vue';
+import AppMenu from '@/components/menu.vue';
 
 export default {
-  components: {
-    'Menu':menu
-  }
+  components: { AppMenu }
 }
 </script>
 
 
-<style lang="scss">
-#app,
-html,
-body {
-  height: 100%;
-  width: 100%;
-}
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<style lang="sass">
+body
+  margin: 0
+  padding: 0
+
+#app
+  font-family: "Avenir", Helvetica, Arial, sans-serif
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  text-align: center
+  color: #2c3e50
   display: flex
-}
+  flex-direction: row
+  flex-wrap: no-wrap
+
+.content
+  width: calc(100% - 320px)
 </style>
