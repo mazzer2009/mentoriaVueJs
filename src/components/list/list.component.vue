@@ -1,5 +1,7 @@
 <template lang="pug">
   .list
+    modal(v-show="isModalVisible" @close="closeModal"  :objeto="objeto" :tela="tela")
+
     table.list__table
       thead
         tr
@@ -11,6 +13,8 @@
         tr.list__row(
           v-for="(linha, rIndex) in linhas"
           :key="rIndex"
+          @click="testeModal(linha)"
+          
           )
           td.list__data(
             v-for="(col, index) in colunas"
@@ -20,7 +24,31 @@
 
 
 <script>
+import Modal from '@/components/modal.vue';
+
+
 export default {
+  data() {
+    return {
+      isModalVisible: false,
+      objeto: Object
+    };
+  },
+  methods: {
+    testeModal(linha){
+      this.objeto = linha;
+      this.isModalVisible = true;
+    },
+    showModal(objeto) {
+      this.isModalVisible = true;
+    },
+    closeModal(){
+      this.isModalVisible=false;
+    }
+  },
+  components: {
+    Modal
+  },
   props: {
     colunas: {
       type: Array,
@@ -30,6 +58,7 @@ export default {
       type: Array,
       required: true,
     },
+    tela: String,
   },
 }
 </script>

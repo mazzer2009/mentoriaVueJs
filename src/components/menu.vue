@@ -1,16 +1,18 @@
+
+
 <template>
   <div id="nav" class="menu">
     <div class="menu__header">
-      <div class="menu__logo">
-        <img width="100%" src="/img/marvel-logo.png" id="menu_logo" />
+      <div class="menu__logo" @click="href='/home'">
+        <img width="100%" src="/img/marvel-logo.png" id="menu_logo"/>
       </div>
     </div>
     <div class="menu__main">
       <router-link class="menu__link" exact to="/">Home</router-link>
       <router-link class="menu__link" exact to="/about">About</router-link>
       <router-link class="menu__link" exact to="/heroes">Heróis</router-link>
-      <router-link class="menu__link" exact to="/superpower">Super Poderes</router-link>
     </div>
+      <router-link class="menu__link" exact to="/superpower">Super Poderes</router-link>
     <div class="menu__footer">
       2019 &copy; Todos os direitos reservados
     </div>
@@ -31,6 +33,9 @@ export default {
   overflow: auto
   position: relative
   color: #fff
+  &__home
+    display: flex
+    flex-direction: row
   &__link
     display: block
     text-decoration: none

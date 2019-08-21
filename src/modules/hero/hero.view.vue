@@ -3,28 +3,27 @@
     list(
       :colunas="colunas"
       :linhas="heroes"
+      :tela="name"
       )
     div(slot="footer")
-      modal(v-show="isModalVisible" @close="closeModal")
-      button(type='button' @click="showModal")  Cadastrar Herói
-      button(type='button') Deletar Herói
+      
+     
 </template>
 
 
 <script>
 import heroService from './hero.service';
-import Modal from '@/components/modal.vue';
 import List from '@/components/list/list.component.vue';
 import Card from '@/components/card.vue';
 
 export default {
   components: {
-    Modal,
     List,
     Card,
   },
   data() {
     return {
+      name: 'hero',
       heroes: [],
       colunas: [
         {
@@ -32,12 +31,12 @@ export default {
           title: '#',
         },
         {
-          name: 'heroname',
-          title: 'Nome de heroi',
+          name: 'realname',
+          title: 'Nome Real',
         },
         {
-          name: 'realname',
-          title: 'Nome real',
+          name: 'heroname',
+          title: 'Nome de herói',
         },
       ],
       isModalVisible: false,
@@ -47,14 +46,7 @@ export default {
     getHeroes() {
       heroService.getAllHeroes().then(response => {
         this.heroes = response.data;
-        console.log(this.heroes);
       });
-    },
-    showModal() {
-      this.isModalVisible = true;
-    },
-    closeModal(){
-      this.isModalVisible=false;
     }
   },
   created() {

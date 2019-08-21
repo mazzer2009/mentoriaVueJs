@@ -25,18 +25,10 @@ export default {
     h1
       font-size: 22px
   &__body
-    height: calc(100vh - 138px)
+    height: calc(100vh - 80px)
     padding: 10px
     box-sizing: border-box
   &__footer
-    padding: 10px
+    height: 100%
     background: #333
-    button
-      border: none
-      padding: 10px
-      color: #fff
-      border-radius: 4px
-      background: #f44336
-      display: inline-block
-      margin: 4px
 </style>
