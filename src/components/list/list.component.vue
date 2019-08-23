@@ -1,6 +1,6 @@
 <template lang="pug">
   .list
-    modal(v-show="isModalVisible" @close="closeModal"  :objeto="objeto" :tela="tela")
+    modal(v-show="isModalVisible" @close="closeModal"  :objeto="objeto" :tela="tela" :poderes="poderes")
 
     table.list__table
       thead
@@ -24,26 +24,26 @@
 
 
 <script>
-import Modal from '@/components/modal.vue';
-
+import Modal from "@/components/modal.vue";
 
 export default {
   data() {
     return {
       isModalVisible: false,
-      objeto: Object
+      objeto: Array
     };
   },
   methods: {
-    testeModal(linha){
+    testeModal(linha) {
       this.objeto = linha;
+      console.log(this.objeto)
       this.isModalVisible = true;
     },
     showModal(objeto) {
       this.isModalVisible = true;
     },
-    closeModal(){
-      this.isModalVisible=false;
+    closeModal() {
+      this.isModalVisible = false;
     }
   },
   components: {
@@ -52,15 +52,16 @@ export default {
   props: {
     colunas: {
       type: Array,
-      required: true,
+      required: true
     },
     linhas: {
       type: Array,
-      required: true,
+      required: true
     },
     tela: String,
-  },
-}
+    poderes: Array
+  }
+};
 </script>
 
 <style lang="sass" scoped>

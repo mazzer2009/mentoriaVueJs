@@ -7,9 +7,15 @@ class HeroService {
     return axiosInstance.get('/api/heroes');
   }
   updateHero(objeto){
-    console.log("Passou aki" + objeto.id);
-    return axiosInstance.put('/api/heroes/' + objeto.id, JSON.stringify(objeto));
+    return axiosInstance.put(`/api/heroes/${objeto.id}`,(objeto));
   }
+  getHeroById(id){
+    return axiosInstance.get('/api/heroes/' + id);
+  }
+  addHero(objeto){
+    return axiosInstance.post(`/api/heroes/`, objeto)
+  }
+ 
 }
 
 export default new HeroService();
