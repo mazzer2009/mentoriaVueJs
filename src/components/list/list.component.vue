@@ -1,7 +1,5 @@
 <template lang="pug">
   .list
-    modal(v-show="isModalVisible" @close="closeModal"  :objeto="objeto" :tela="tela" :poderes="poderes")
-
     table.list__table
       thead
         tr
@@ -10,44 +8,29 @@
           :key="index"
           ) {{ coluna.title }}
       tbody
+        tr
+          td(colspan="100%" v-if="!linhas.length") Nenhum registro encontrado
         tr.list__row(
           v-for="(linha, rIndex) in linhas"
           :key="rIndex"
-          @click="testeModal(linha)"
-          
+          @click="select(linha)"
           )
           td.list__data(
             v-for="(col, index) in colunas"
             :key="index"
-            ) {{ linha[col.name] }}
+            )
+            div(v-if="col.name === 'delete'")
+              button delete
+            span(v-else) {{ linha[col.name] }}
 </template>
 
 
 <script>
-import Modal from "@/components/modal.vue";
-
 export default {
-  data() {
-    return {
-      isModalVisible: false,
-      objeto: Array
-    };
-  },
   methods: {
-    testeModal(linha) {
-      this.objeto = linha;
-      console.log(this.objeto)
-      this.isModalVisible = true;
+    select(linha) {
+      this.$emit('select', linha);
     },
-    showModal(objeto) {
-      this.isModalVisible = true;
-    },
-    closeModal() {
-      this.isModalVisible = false;
-    }
-  },
-  components: {
-    Modal
   },
   props: {
     colunas: {
@@ -58,8 +41,6 @@ export default {
       type: Array,
       required: true
     },
-    tela: String,
-    poderes: Array
   }
 };
 </script>

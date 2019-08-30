@@ -1,66 +1,17 @@
 <template lang="pug">
   transition(name="fade")
     .modal-backdrop
-      .modal(role="dialog"
-             aria-labelledby="modalTitle"
-             aria-describedby="modalDescription"
-      )
+      .modal(
+        role="dialog"
+        aria-labelledby="modalTitle"
+        aria-describedby="modalDescription"
+        )
         .modal-header(id="modalTitle")
           slot(name="header")
-            h1 Cadastro de herói
+            h1 {{ title }}
             button(type="button" class="btn-close" @click="close" aria-label="Close modal") X
         section.modal-body(id="modalDescription")
-          slot(name="body")
-            form(@submit.prevent="atualizarHeroi()" class="form" v-if="this.tela ==='hero'")
-              .form__body
-               .form__itens
-                 div.form__nome
-                  div
-                    label(for="name") Nome
-                    input(id="name" v-model="objeto.realname" type="text" name="name")
-                  div
-                    label(for="heroname") Nome de Herói
-                    input(id="heroname" v-model="objeto.heroname" type="text" name="heroname")
-                 div.form__poderes
-                  div
-                    label.poderes(for="superpoder") Poderes
-                    
-              .form__footer
-                .btn__submit
-                  button.btn__salvar(type="submit") Salvar
-                  button.btn__fechar(type="button" @click="close" aria-label="Close modal") Fechar
-            
-            form(@submit.prevent="cadastrarHeroi()" class="form" v-else-if="this.tela ==='cadastroHeroi'")
-              .form__body
-               .form__itens
-                
-                  div
-                    label(for="name") Nome
-                    input(id="name" v-model="objeto.realname" type="text" name="name")
-                  div
-                    label(for="heroname") Nome de Herói
-                    input(id="heroname" v-model="objeto.heroname" type="text" name="heroname")
-              .form__footer
-                .btn__submit
-                  button.btn__salvar(type="submit") Salvar
-                  button.btn__fechar(type="button" @click="close" aria-label="Close modal") Fechar
-
-
-            form(@submit.prevent="atualizaSuperpoder()" class="form" v-else)
-              .form__body
-               .form__itens
-                 div
-                  label(for="name") Super Poder
-                  input(id="name" v-model="objeto.superpoder" type="text" name="name")
-                 div
-                  label(for="descricao") Descrição
-                  textarea.descricao(id="descricao" v-model="objeto.descrição" type="text" name="heroname" rows='7' cols='40')
-              .form__footer
-                .btn__submit
-                  button.btn__salvar Salvar
-                  button.btn__fechar(type="button" @click="close" aria-label="Close modal") Fechar
-        footer.modal-footer
-          slot(name="footer")
+          slot
 </template>
 
 <script>
@@ -70,85 +21,18 @@ import SuperpowerService from "@/modules/superpowers/superpower.service";
 import { constants } from "crypto";
 export default {
   name: "modal",
-  data: {
-    heroname: null,
-    name: null,
-    erros: [],
-    poderesHeroi: []
-  },
   props: {
-    tela: String,
-    objeto: Array,
-    poderes: Array
+    title: String,
   },
   methods: {
     close() {
       this.$emit("close");
-      console.log(this.tela)
     },
-    atualizarHeroi(e) {
-      heroService
-        .updateHero(this.objeto)
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.error(e);
-        });
-        this.close();
-    },
-    cadastrarHeroi(e){
-      heroService
-        .addHero(this.objeto)
-        .then(response =>{
-          console.log(response.data)
-        })
-        .catch(e =>{
-          console.error(e)
-        });
-        this.close();
-    },
-    atualizaSuperpoder(e){
-      SuperpowerService
-        .updateSuperpoderById(this.objeto)
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(e =>{
-          console.error(e)
-        });
-        this.close();
-    },
-
-    /* axios.post('http://5d4cc67c04ba7100147033b0.mockapi.io/heroapi/heroes/',{
-          heroname: this.objeto.heroname,
-          realname: this.objeto.realname
-        }).then((response) =>{
-          alert(response.data)
-        })
-        .catch((e)=>{
-          alert(e)
-        });*/
-
-    getSuperpowerByHero() {
-      if (this.tela === "hero") {
-        this.poderesHeroi = [];
-        for (var i = 0; i < this.poderes.legth; i++) {
-          if (this.poderes[i].heroes_id === this.objeto.id) {
-            this.poderesHeroi.push(this.poderes[i].superpower_id);
-          }
-        }
-        console.log(this.poderesHeroi);
-      }
-    }
   },
-  created() {}
 };
 </script>
 
-
 <style lang="sass">
-
   .form
    display: flex
    flex-direction: column
@@ -160,7 +44,6 @@ export default {
      display: flex
      justify-content: space-around
      height: 100%
-
    &__poderes
      display: flex
      flex-direction: column
@@ -190,11 +73,12 @@ export default {
   .modal
     background: #FFFFFF
     box-shadow: 2px 2px 20px 1px
-    overflow-x: auto
+    overflow: auto
     display: flex
     flex-direction: column
     width: 50%
-    height: 450px
+    min-height: 450px
+    max-height: 80%
   .modal-header
     padding: 15px
     display: flex
@@ -230,14 +114,10 @@ export default {
       background: #f44336
       display: inline-block
       margin: 4px
-
   .formulario
       display: flex
       justify-content: space-around
   .poderes
     resize: none
     vertical-align: top
-
-
-
 </style>

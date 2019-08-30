@@ -3,38 +3,47 @@
     list(
       :colunas="colunas"
       :linhas="heroes"
-      :poderes="hero_superpower"
-      :tela="name"
+      @select="selectHero"
       )
     div(slot="footer")
-      modal(v-show="isModalVisible" @close="closeModal"  :objeto="objeto" :tela="'cadastroHeroi'" :poderes="hero_superpower")
-      button(type='button' @click="showModal")  Cadastrar Herói
-      
-     
+      modal(
+        v-show="isModalVisible"
+        @close="closeModal"
+        title="Cadastro de Herois"
+        )
+        hero-form(
+          v-model="payload"
+          @close="closeModal"
+          @submit="saveHero"
+          )
+      button(type='button' @click="showModal") Cadastrar Herói
 </template>
-
 
 <script>
 import heroService from "./hero.service";
 import heroes_Superpower from "../heroes_superpower/heroes_superpower.service"
 import List from "@/components/list/list.component.vue";
 import Card from "@/components/card.vue";
+import HeroForm from "./hero.form.vue";
 import Modal from '@/components/modal.vue';
 
 export default {
   components: {
     List,
     Card,
-    Modal
+    Modal,
+    HeroForm,
   },
   data() {
     return {
       name: "hero",
       heroes: [],
       hero_superpower: [],
-      objeto: {
-        realname:null,
-        heroname:null
+      payload: {
+        id: null,
+        realname: null,
+        heroname: null,
+        superpowers: [],
       },
       colunas: [
         {
@@ -48,15 +57,30 @@ export default {
         {
           name: "heroname",
           title: "Nome de herói"
+        },
+        {
+          name: "delete",
+          title: "Opcoes"
         }
       ],
       isModalVisible: false
     };
   },
   methods: {
+    selectHero(hero) {
+      heroService.getHeroById(hero.id).then(response => {
+        this.payload = response.data;
+        this.isModalVisible = true;
+      });
+    },
     getHeroes() {
       heroService.getAllHeroes().then(response => {
-        this.heroes = response.data;
+        this.heroes = response.data.map((item) => {
+          return {
+            ...item,
+            delete: true,
+          };
+        });
       });
     },
     getSuperpowerByHero() {
@@ -65,11 +89,34 @@ export default {
       });
     },
     showModal() {
+      this.payload = {
+        id: null,
+        realname: null,
+        heroname: null,
+        superpowers: [],
+      };
       this.isModalVisible = true;
     },
     closeModal(){
-      this.isModalVisible=false;
-    }
+      this.isModalVisible = false;
+    },
+    saveHero() {
+      const { superpowers } = this.payload;
+      delete this.payload.superpowers;
+
+      heroService[this.payload.id ? 'updateHero' : 'addHero'](this.payload).then((response) => {
+        this.closeModal();
+        this.getHeroes();
+
+        const { id } = response.data;
+        superpowers.forEach((power) => {
+          power.heroes_id = id;
+          heroService[power.id ? 'updateSupertPower' : 'addSupertPower'](power);
+        });
+
+        alert('Operacao realizada com sucesso');
+      });
+    },
   },
   created() {
     this.getHeroes();
@@ -79,7 +126,6 @@ export default {
 </script>
 
 <style lang="sass">
-
 // .macete
 //   background: rgba(black, .5)
 //   z-index: 999
@@ -96,6 +142,4 @@ export default {
 //     left: 50%
 //     top: 50%
 //     transform: translate(-50%, -50%)
-
-
 </style>

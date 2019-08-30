@@ -6,16 +6,26 @@ class HeroService {
   getAllHeroes() {
     return axiosInstance.get('/api/heroes');
   }
-  updateHero(objeto){
-    return axiosInstance.put(`/api/heroes/${objeto.id}`,(objeto));
+
+  updateHero(objeto) {
+    return axiosInstance.put(`/api/heroes/${objeto.id}`, objeto);
   }
-  getHeroById(id){
-    return axiosInstance.get('/api/heroes/' + id);
+
+  getHeroById(id) {
+    return axiosInstance.get(`/api/heroes/${id}`);
   }
-  addHero(objeto){
-    return axiosInstance.post(`/api/heroes/`, objeto)
+
+  addHero(objeto) {
+    return axiosInstance.post('/api/heroes/', objeto);
   }
- 
+
+  addSupertPower(payload) {
+    return axiosInstance.post('/api/heroes_superpower', payload);
+  }
+
+  updateSupertPower(payload) {
+    return axiosInstance.put(`/api/heroes_superpower/${payload.id}`, payload);
+  }
 }
 
 export default new HeroService();
