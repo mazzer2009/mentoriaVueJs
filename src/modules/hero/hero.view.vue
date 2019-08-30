@@ -4,6 +4,7 @@
       :colunas="colunas"
       :linhas="heroes"
       @select="selectHero"
+      @delete="deleteHero"
       )
     div(slot="footer")
       modal(
@@ -26,6 +27,7 @@ import List from "@/components/list/list.component.vue";
 import Card from "@/components/card.vue";
 import HeroForm from "./hero.form.vue";
 import Modal from '@/components/modal.vue';
+import VueToast from 'vue-toast-notification';
 
 export default {
   components: {
@@ -73,6 +75,15 @@ export default {
         this.isModalVisible = true;
       });
     },
+    deleteHero(hero){
+      event.stopPropagation()
+      var deletar = confirm("Certeza?")
+      if(deletar===true){
+        heroService.deletHeroById(hero.id);
+      }
+      this.getHeroes();
+
+    },
     getHeroes() {
       heroService.getAllHeroes().then(response => {
         this.heroes = response.data.map((item) => {
@@ -110,6 +121,8 @@ export default {
 
         const { id } = response.data;
         superpowers.forEach((power) => {
+          console.log("teste",power)
+          console.log("teste id",power.id)
           power.heroes_id = id;
           heroService[power.id ? 'updateSupertPower' : 'addSupertPower'](power);
         });

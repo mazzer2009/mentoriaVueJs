@@ -20,7 +20,11 @@
             :key="index"
             )
             div(v-if="col.name === 'delete'")
-              button delete
+              img(
+                src="/img/delete.png"
+                align="center"
+                @click="delet(linha)"
+                )
             span(v-else) {{ linha[col.name] }}
 </template>
 
@@ -31,6 +35,9 @@ export default {
     select(linha) {
       this.$emit('select', linha);
     },
+    delet(linha){
+      this.$emit('delete', linha);
+    }
   },
   props: {
     colunas: {

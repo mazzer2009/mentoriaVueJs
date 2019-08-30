@@ -15,6 +15,10 @@ class HeroService {
     return axiosInstance.get(`/api/heroes/${id}`);
   }
 
+  deletHeroById(id){
+    return axiosInstance.delete(`/api/heroes/${id}`);
+  }
+
   addHero(objeto) {
     return axiosInstance.post('/api/heroes/', objeto);
   }

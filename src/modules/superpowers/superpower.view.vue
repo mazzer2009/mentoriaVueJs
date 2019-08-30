@@ -3,6 +3,8 @@
     list(
       :colunas="colunas"
       :linhas="superpowers"
+      @select="selectSuperpower"
+      
   )
     div(slot="footer")
 </template>
